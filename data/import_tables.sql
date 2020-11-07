@@ -10,69 +10,58 @@ DROP TABLE IF EXISTS "level","answer","user","quiz","question","tag","quiz_has_t
 -- Create Table
 --
 CREATE TABLE IF NOT EXISTS "level" (
-	"id" serial PRIMARY KEY,
-	"name" text NOT NULL
-);
-
-
-CREATE TABLE IF NOT EXISTS "user" (
-	"id" SERIAL PRIMARY KEY,
-	"last_name" TEXT NOT NULL,
-	"first_name" TEXT NOT NULL,
-	"email" TEXT NOT NULL,
-	"password" TEXT NOT NULL,
-	"role" TEXT NOT NULL,
-	"age" INT
-);
-
-CREATE TABLE IF NOT EXISTS "quiz" (
-	"id" SERIAL PRIMARY KEY,
-	"title" TEXT NOT NULL,
-	"description" TEXT NOT NULL,
-	"creation_date" TIMESTAMP,
-	-- on définit la clé étrangère directement à la création de la table avec REFERENCES <table>(<champ>)
-	-- par convention, ce champ est nommé <table>_<champ>
-	"user_id" INT NOT NULL REFERENCES "user"("id")
-);
-
-
-CREATE TABLE IF NOT EXISTS "tag" (
-	"id" SERIAL PRIMARY KEY,
-	"name" TEXT NOT NULL,
-	"description" TEXT
-);
-
-
-CREATE TABLE IF NOT EXISTS "question" (
-	"id" SERIAL PRIMARY KEY,
-	"quiz_id" INT NOT NULL REFERENCES "quiz"("id"),
-	"question" text NOT NULL,
-	"level_id" INT NOT NULL REFERENCES "level"("id"),
-	"anecdote" text NULL,
-	"wiki" text NULL,
-	"answer_id" INT NOT NULL,
-     "content" TEXT,
-	"story" TEXT,
-	"data" TEXT
+	"id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+	"name" TEXT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS "answer" (
-	"id" SERIAL PRIMARY KEY,
-	"description" text NOT NULL,
-	"question_id" INT NOT NULL REFERENCES "question"("id")
+	"id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+	"description" TEXT NOT NULL,
+	"question_id" INT NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS "user" (
+	"id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+	"email" TEXT NOT NULL,
+	"password" TEXT NOT NULL,
+	"first_name" TEXT NULL,
+	"last_name" TEXT NULL,
+	"role" TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS "quiz" (
+	"id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+	"title" TEXT NOT NULL,
+	"description" TEXT NULL,
+	"user_id" INT NOT NULL REFERENCES "user" ("id"),
+	"creation_date" TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS "question" (
+	"id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+	"question" TEXT NOT NULL,
+	"anecdote" TEXT NULL,
+	"wiki" TEXT NULL,
+	"level_id" INT NOT NULL REFERENCES "level" ("id"),
+	"answer_id" INT NOT NULL REFERENCES "answer" ("id"),
+	"quiz_id" INT NOT NULL REFERENCES "quiz" ("id")
+);
+
+CREATE TABLE IF NOT EXISTS "tag" (
+	"id" INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+	"name" TEXT NOT NULL
+);
 
 CREATE TABLE IF NOT EXISTS "quiz_has_tag" (
-	"quiz_id" integer REFERENCES "quiz"("id"),
-	"tag_id" integer REFERENCES "tag" ("id"),
+	"quiz_id" INT REFERENCES "quiz"("id"),
+	"tag_id" INT REFERENCES "tag" ("id"),
 	PRIMARY KEY ("quiz_id", "tag_id")
 );
 --
 -- REFERENCES question_id to "answer" table.
 --
-ALTER TABLE "question"
-	ADD FOREIGN KEY ("answer_id") REFERENCES "answer"("id");
+ALTER TABLE "answer"
+	ADD FOREIGN KEY ("question_id") REFERENCES "question" ("id");
 
 --
 -- commits the current transaction
