@@ -6,7 +6,7 @@ const passwordSchema = new passwordValidator()
 const { User } = require('../models')
 
 const authController = {
-   showSignupForm: (req, res) => {
+   showSignupForm: (_, res) => {
       res.render('signup')
    },
    handleSignupForm: async (req, res) => {
