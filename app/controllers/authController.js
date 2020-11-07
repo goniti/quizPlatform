@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt')
 const emailValidator = require('email-validator')
 const passwordValidator = require('password-validator')
-const passwordSchema = new passwordValidator()
+const schema = new passwordValidator()
 
 const { User } = require('../models')
 
@@ -30,16 +30,9 @@ const authController = {
             errors.push('La confirmation du mot de passe ne correspond pas !')
          }
          // 5. Check if password is valid
+
          // CNIL Recommendations: min 8 char long, including one lowercase, one uppercase, one number and one special character.
-         if (!req.body.password ||
-            passwordSchema
-               .is().min(8)
-               .has().lowercase(1)
-               .has().uppercase(1)
-               .has().digits(1)
-               .has().not().spaces()
-               .has().symbols(1)
-         ) {
+         if (!schema.is().min(8).has().lowercase(1).has().uppercase(1).has().digits(1).has().not().spaces().has().symbols(1).validate(req.body.password)) {
             errors.push('Le mot de passe doit contenir  8 caractères minimum, dont une minuscule, une majuscule, un chiffre et un caractère spécial!')
          }
 
@@ -61,10 +54,11 @@ const authController = {
                const hashedPassword = bcrypt.hashSync(req.body.password, 10)
                // create new user
                const newUser = new User({
-                  firstname: req.body.firstname,
-                  lastname: req.body.lastname,
+                  first_name: req.body.firstname,
+                  last_name: req.body.lastname,
                   email: req.body.email,
                   password: hashedPassword,
+                  role: 'user',
                })
 
                await newUser.save()
