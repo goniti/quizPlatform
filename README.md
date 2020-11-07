@@ -6,6 +6,8 @@
 #### A back end web application framework for Node. js
 > [Getting started](https://expressjs.com/en/starter/installing.html)
 
+>[express-session:](https://www.npmjs.com/package/express-session) ```npm i express-session```
+
 ### EJS: ```npm i ejs```
 #### A simple templating language that lets you generate HTML markup with plain JavaScript
 > [Getting started](https://ejs.co/#install)
