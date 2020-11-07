@@ -11,7 +11,7 @@ const mainController = {
 
          res.render('index', { quizzes, tags })
       } catch (error) {
-         res.status(500).render('500')
+         res.status(500).send(error.message)
       }
    },
 

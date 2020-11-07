@@ -18,9 +18,17 @@
 ---
 ## Modules
 
+### node-postgres: ```npm i pg```
+#### Non-blocking PostgreSQL client for Node.js
+> [Npm package](https://www.npmjs.com/package/pg)
+
 ### Dotenv: ```npm i dotenv```
 #### A zero-dependency module that loads environment variables
 > [Readme](https://github.com/motdotla/dotenv#readme)
+
+### bcrypt: ```npm i bcrypt```
+#### A library to help you hash passwords
+> [Npm package](https://www.npmjs.com/package/bcrypt)
 
 ### email-validator: ```npm i email-validator```
 #### A simple module to validate an e-mail address

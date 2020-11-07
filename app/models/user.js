@@ -13,8 +13,8 @@ User.init(
       // fields name and type
       email: { type: DataTypes.STRING, validate: { isEmail: true } },
       password: DataTypes.STRING,
-      firstname: DataTypes.STRING,
-      lastname: DataTypes.STRING,
+      first_name: DataTypes.STRING,
+      last_name: DataTypes.STRING,
       role: DataTypes.TEXT,
    },
    //* bdd connection information
