@@ -16,3 +16,7 @@
 #### A zero-dependency module that loads environment variables
 > [Getting started](https://github.com/motdotla/dotenv#readme)
 ---
+### sequelize: ```npm i sequelize```
+#### A promise-based Node.js ORM for Postgres, MySQL, MariaDB, SQLite and Microsoft SQL Server
+> [Getting started](https://sequelize.org/)
+---
